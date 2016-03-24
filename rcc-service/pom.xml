@@ -1,25 +1,150 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-  <modelVersion>4.0.0</modelVersion>
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
 
-  <groupId>unidue</groupId>
-  <artifactId>rcc-service</artifactId>
-  <version>0.0.1-SNAPSHOT</version>
-  <packaging>jar</packaging>
+    <groupId>unidue</groupId>
+    <artifactId>rcc-service</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <packaging>jar</packaging>
 
-  <name>rcc-service</name>
-  <url>http://maven.apache.org</url>
+    <name>rcc-service</name>
+    <url>http://maven.apache.org</url>
 
-  <properties>
-    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-  </properties>
+    <properties>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
-  <dependencies>
-    <dependency>
-      <groupId>junit</groupId>
-      <artifactId>junit</artifactId>
-      <version>3.8.1</version>
-      <scope>test</scope>
-    </dependency>
-  </dependencies>
+        <!-- jdk -->
+        <jdk.version>1.8</jdk.version>
+
+        <!-- logging -->
+        <slf4j-api-version>1.7.7</slf4j-api-version>
+        <slf4j-log4j12-version>1.6.1</slf4j-log4j12-version>
+
+        <!-- cayenne -->
+        <cayenne-client.version>3.1</cayenne-client.version>
+        <resin-hessian.version>4.0.M2</resin-hessian.version>
+        
+         
+        <!-- json -->
+        <jackson-version>2.2.2</jackson-version>
+        
+        <!-- testing -->
+        <simple-jndi-version>0.11.4.1</simple-jndi-version>
+        <h2-database-version>1.2.138</h2-database-version>
+        <testng-release-version>6.8.7</testng-release-version>
+
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>3.8.1</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- cayenne -->
+        <dependency>
+            <groupId>org.apache.cayenne</groupId>
+            <artifactId>cayenne-client</artifactId>
+            <!-- Here specify the version of Cayenne you are actually using -->
+            <version>3.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.caucho</groupId>
+            <artifactId>resin-hessian</artifactId>
+            <version>3.1.6</version>
+        </dependency>
+        
+        
+<!--         cayenne server! - deprecated -->
+<!--         <dependency> -->
+<!--             <groupId>org.apache.cayenne</groupId> -->
+<!--             <artifactId>cayenne-server</artifactId> -->
+<!--             <version>${cayenne-server-version}</version> -->
+<!--         </dependency> -->
+
+        <!--logging -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-api-version}</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-log4j12-version}</version>
+        </dependency>
+
+        <!-- json -->
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>${jackson-version}</version>
+        </dependency>
+        
+        <!-- testing -->
+        <dependency>
+            <groupId>simple-jndi</groupId>
+            <artifactId>simple-jndi</artifactId>
+            <version>${simple-jndi-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>${h2-database-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- A dependency on either JUnit or TestNG is required, or the surefire plugin (which runs the tests) will fail, 
+            preventing Maven from packaging the WAR. Tapestry includes a large number of testing facilities designed for use with TestNG 
+            (http://testng.org/), so it's recommended. -->
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${testng-release-version}</version>
+            <scope>test</scope>
+        </dependency>
+
+    </dependencies>
+
+    <build>
+
+        <finalName>rcc-service</finalName>
+        <pluginManagement>
+            <plugins>
+
+                <!-- Set a JDK compiler level -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-compiler-plugin</artifactId>
+                    <version>2.3.2</version>
+                    <configuration>
+                        <source>${jdk.version}</source>
+                        <target>${jdk.version}</target>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+    </build>
+
+
+
+    <repositories>
+        <repository>
+            <id>caucho</id>
+            <name>Caucho Repository</name>
+            <url>http://caucho.com/m2</url>
+            <layout>default</layout>
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
+            <releases>
+                <enabled>true</enabled>
+            </releases>
+        </repository>
+    </repositories>
 </project>
