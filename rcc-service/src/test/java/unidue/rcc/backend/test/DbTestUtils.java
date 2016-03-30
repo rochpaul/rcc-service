@@ -82,12 +82,7 @@ public class DbTestUtils {
 
         this.jndiBindings = new HashSet<>();
 
-        createJndiContext();
-
-        createDatabase("miless", "jdbc/miless");
-        createDatabase("reserve_collections", "jdbc/reserve_collections");
-        // createDatabase("rc_access_log", "jdbc/rc_access_log");
-//        initCayenne();
+        initCayenne();
 
         // initDAOs();
         // try {
@@ -106,7 +101,7 @@ public class DbTestUtils {
      *             thrown if a schema of one {@link DataNode} could not be
      *             initialized.
      */
-//    private void initCayenne() throws DatabaseException {
+    private void initCayenne() throws DatabaseException {
         
 //        MockClientConnection connection; 
 //        
@@ -134,9 +129,20 @@ public class DbTestUtils {
 //          }
 //        
         
-//        // initialize cayenne configuration
+        // initialize cayenne configuration
 //        runtime = new ServerRuntime("cayenne-reserve-collections.xml");
+        
+        
+        
+//        Map<String, String> properties = new HashMap<String, String>();
+//      //define the properties for runtime 
+//      properties.put("ROP_SERVICE_URL", "http://localhost:8080/library-uni-due-model/cayenne-servic");   
 //
+//      ClientRuntime runtime = new ClientRuntime(properties);
+//      ObjectContext context = runtime.getContext();
+
+//        Collection<DataNode> nodes;
+        
 //        Collection<DataNode> nodes = runtime.getDataDomain().getDataNodes();
 //        for (DataNode node : nodes) {
 //            // in memory db was just created, therefore the schema has to be
@@ -148,8 +154,8 @@ public class DbTestUtils {
 //            } catch (SQLException e) {
 //                throw new DatabaseException("could not update schema of node" + node.getName(), e);
 //            }
-//        }
-//
+        }
+
 //        /*
 //         * bind ObjectContext to current thread, so test are able to use
 //         * BaseContext.getThreadObjectContext() to retrieve context.
@@ -160,43 +166,7 @@ public class DbTestUtils {
 //        LOG.info("object context bound to current thread");
 //    }
 
-    /**
-     * Creates a jndi {@link Context} where databases can be bound to.
-     *
-     * @throws DatabaseException
-     *             thrown if the jndi context could not be found or created.
-     */
-    private void createJndiContext() throws DatabaseException {
-
-        /*
-         * set factory to use when creating new jndi naming context to in memory
-         * context factory
-         */
-        System.setProperty(Context.INITIAL_CONTEXT_FACTORY, MemoryContextFactory.class.getName());
-
-        /*
-         * will put the in-memory JNDI implementation into a mode whereby all
-         * InitialContext's share the same memory. By default this is not set,
-         * so two separate InitialContext's do not share the same memory and
-         * what is bound to one will not be viewable in the other.
-         */
-        System.setProperty("org.osjava.sj.jndi.shared", "true");
-
-        // create root node of this jndi naming context
-        try {
-            jndiContext = new InitialContext();
-        } catch (NamingException e) {
-            throw new DatabaseException("could not create jndi context", e);
-        }
-
-        try {
-            jndiContext.createSubcontext(ROOT_JNDI_CONTEXT_NAME);
-            LOG.info("jndi context " + ROOT_JNDI_CONTEXT_NAME + " created");
-
-        } catch (NamingException e) {
-            throw new DatabaseException("could not create context " + ROOT_JNDI_CONTEXT_NAME, e);
-        }
-    }
+    
 
     /**
      * Creates a database according to {@link #createH2MemoryDB(String)} with
